@@ -17,7 +17,7 @@
     <li><a href="<?php echo site_url();?>/CtrlAdmin/DocExamLists/THES" >
       <i class="glyphicon glyphicon-inbox"></i><span class="text"> ขอสอบวิทยานิพนธ์</span></a>
     </li>
-    <li><a href="<?php echo site_url();?>/home/SearchStudent" >
+    <li><a href="<?php echo site_url();?>/CtrlAdmin/SearchStudent" >
       <i class="glyphicon glyphicon-education"></i><span class="text"> ข้อมูลนักศึกษา</span></a>
     </li>
     <li><a href="<?php echo site_url();?>/CtrlAdmin/OfficerList" >
