@@ -1,8 +1,8 @@
 <div class="col-md-12" style="text-align: right; ">
-<form method="POST" action="<?php echo base_url();?>index.php/CtrlAdmin/SearchStudent">
+<form method="POST" action="<?php echo base_url();?>index.php/CtrlAdmin/SearchOfficer">
   <button type="submit" class="btn btn-primary" style="margin-right:-20px;float: right;"> ค้นหา </button>
-  <input type="text" id="STUDENTFULLNAME" name="STUDENTFULLNAME" class="form-control in-search"  placeholder="ชื่อนักศึกษา - สกุล" value="<?php echo $keyword['STUNAME']; ?>">
-  <input type="text" id="STUDENTCODE" name="STUDENTCODE" class="form-control in-search"  placeholder="รหัสนักศึกษา" value="<?php echo $keyword['STUCODE']; ?>">
+  <input type="text" id="FULLNAME" name="FULLNAME" class="form-control in-search"  placeholder="ชื่อนักศึกษา - สกุล" value="<?php echo $keyword['NAME']; ?>">
+  <input type="text" id="CODE" name="CODE" class="form-control in-search"  placeholder="รหัสนักศึกษา" value="<?php echo $keyword['CODE']; ?>">
 </form> 
 </div>
 
@@ -20,18 +20,18 @@
               <th>รหัสนักศึกษา</th>
               <th>ชื่อ-นามสกุล</th>
               <th  width="150">คณะ</th>
-              <th>ระดับการศึกษา</th>
+              <th>สาขาวิชา</th>
               <th>ปีการศึกษา</th>
               <th>สถานภาพ</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($StudentLists as $RS): ?>
+            <?php foreach ($Lists as $RS): ?>
             <tr role="row" class="odd">
-              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RS['STUDENTID']; ?>/<?php echo $this->uri->segment(3);?>" ><?php echo $RS['STUDENTCODE']; ?></a></td>
-              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RS['STUDENTID']; ?>/<?php echo $this->uri->segment(3);?>" > <?php echo $RS['STUNAME']; ?></a></td>
+              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RS['OFFICERID']; ?>/<?php echo $this->uri->segment(3);?>" ><?php echo $RS['OFFICERCODE']; ?></a></td>
+              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RS['OFFICERID']; ?>/<?php echo $this->uri->segment(3);?>" > <?php echo $RS['OFFICERNAME']; ?></a></td>
               <td><?php echo $RS['FACULTYNAME']; ?></td>
-              <td><?php echo $RS['LEVELNAME']; ?></td>
+              <td><?php echo $RS['DEPARTMENTNAME']; ?></td>
               <td><?php echo $RS['CURRENTACADYEAR']; ?></td>
               <td><?php echo $RS['procedure_name']; ?></td>
             </tr>

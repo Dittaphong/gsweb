@@ -19,10 +19,7 @@ class CtrlAdmin extends CI_Controller {
 	}
 
 	public function index(){
-		$StrQuery = array(
-			'Result' => array('Result' => ''),
-			'View' => 'Admin/Dashboard'
-		);
+		$StrQuery = array('View' => 'Admin/Dashboard');
 		$data['req_adviser'] = "20";
 		$data['qe_ce'] = "12";
 		$this->loadpage($StrQuery,$data);
@@ -89,16 +86,25 @@ class CtrlAdmin extends CI_Controller {
 	public function SearchStudent(){
 		if(!$_POST){ 
 			$data['keyword'] = array('STUCODE' => '','STUNAME' => ''); 
-			$data['StudentLists'] = $this->mod_admin->DocAdviserLists($this->GROUPTYPE); 
+			$data['StudentLists'] = $this->mod_admin->StudentSearch($data['keyword']); 
 		}else{ 
-			$data['keyword'] = array(
-				'STUCODE' => $_POST['STUDENTCODE'],
-				'STUNAME' => $_POST['STUDENTFULLNAME']
-			);
-			$data['StudentLists'] = $this->mod_admin->DocAdviserSearch($this->GROUPTYPE,$data['keyword']);
+			$data['keyword'] = array('STUCODE' => $_POST['STUDENTCODE'],'STUNAME' => $_POST['STUDENTFULLNAME']); 
+			$data['StudentLists'] = $this->mod_admin->StudentSearch($data['keyword']); 
 		}
 			$StrQuery = array('View' => 'Admin/StudentLists'); 
 			$data['PageName'] = "ข้อมูลนักศึกษา"; 
+			$this->loadpage($StrQuery,$data); 
+	}
+
+	public function SearchOfficer(){
+		if(!$_POST){ 
+			$data['keyword'] = array('CODE' => '','NAME' => '');  
+		}else{ 
+			$data['keyword'] = array('CODE' => $_POST['CODE'],'NAME' => $_POST['FULLNAME']); 
+		} 
+			$data['Lists'] = $this->mod_admin->OfficerSearch($data['keyword']); 
+			$StrQuery = array('View' => 'Admin/OfficerLists'); 
+			$data['PageName'] = "ข้อมูลนักศึกษา";
 			$this->loadpage($StrQuery,$data); 
 	}
 
