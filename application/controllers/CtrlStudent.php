@@ -7,7 +7,7 @@ class CtrlStudent extends CI_Controller {
 		parent::__construct();
 		// session_start();
 		if($this->session->userdata("GROUPTYPE")!="STUDENT"){
-			redirect('authen/');
+			redirect('CtrlAuthen/');
 		}  
 	} 
 	public function loadpage($StrQuery){

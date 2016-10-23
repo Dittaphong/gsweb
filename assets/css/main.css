@@ -14883,13 +14883,23 @@ input {
 /*	Top
 /*------------------------------------------------*/
 .top-bar {
-  padding: 5px 0;
-  background-color: #555;
+  padding: 5px 0; 
+  background-color: #D7D7D7; 
 }
+
 .top-bar .logo {
   position: relative;
+  width: 100%;
   top: 7px;
 }
+
+.userinfo{
+  float: right;
+  width: 50%;
+  top: 7px;
+}
+
+
 .top-bar .top-bar-right {
   text-align: right;
   padding-right: 15px;

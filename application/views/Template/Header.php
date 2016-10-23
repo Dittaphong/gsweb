@@ -72,17 +72,22 @@ ul.main-menu > li.active > a {
 <!-- WRAPPER -->
 <div class="wrapper">
 <!-- TOP BAR -->
-	<div class="top-bar" style="background-color:rgb(246, 246, 246);  width: 100%;">
+	<div class="top-bar" style="width: 100%;">
 		<div class="container">
 			<div class="row">
-			        <!-- logo -->
-			    <div class="col-md-2 logo" style="margin-top:-7px; margin-bottom:5px;">
-
-			     	<a href="#">
-			     		<b style="color:#F2F2F2;font-size:16px;"><img src="<?php echo base_url();?>assets/img/logo-gs-blue.png"></b>
-			     	</a>
-			    </div>
-			        <!-- end logo -->
+		        <!-- logo -->
+				    <div class="col-md-2 logo" style="margin-top:-7px; margin-bottom:5px;">
+				     	<a href="#">
+				     		<b style="color:#F2F2F2;font-size:16px;">
+				     			<img src="<?php echo base_url();?>assets/img/logo-gs-blue.png">
+				     		</b>
+				     	</a>
+				    </div>  
+				    <div class="top-bar-right"  style="margin-top:-35px;font-size:16px;">
+				    	<i class="glyphicon glyphicon-globe"></i> GROUP: <?php echo $user_group." "; ?> 
+				    	<i class="glyphicon glyphicon-user"></i> USER: <?php echo $user; ?> 
+				    </div>
+		        <!-- end logo -->
 			    <div class="col-md-10">
 			        <div class="row">
 			              <div class="col-md-3"> </div>

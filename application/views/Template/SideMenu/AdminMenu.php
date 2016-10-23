@@ -32,7 +32,7 @@
     <li><a href="<?php echo site_url();?>/CtrlAdmin/SearchThesis" >
       <i class="glyphicon glyphicon-book"></i><span class="text"> ค้นหาวิทยานิพนธ์</span></a>
     </li>
-    <li>
+    <!-- <li>
       <ul class="sub-menu" style="display: block;">
         <li class="">
           <a href="#" class="js-sub-menu-toggle">
@@ -50,7 +50,7 @@
         </li>
 
       </ul>
-    </li>
+    </li> -->
     <li><a href="<?php echo site_url();?>/CtrlAuthen/Logout/" >
       <i class="glyphicon glyphicon-remove-circle" style="color:red"></i><span class="text" style="color:red"> ออกจากระบบ</span></a>
     </li>

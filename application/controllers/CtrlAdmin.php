@@ -3,24 +3,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CtrlAdmin extends CI_Controller {
 	public function __construct(){
-		parent::__construct();
-		// session_start();
+		parent::__construct(); 
+		if($this->session->userdata("GROUPTYPE")!="ADMIN" &&  $this->session->userdata("GROUPTYPE")!="FACULTY"){
+			redirect('CtrlAuthen/');
+		} 
 	}
 	public function loadpage($StrQuery){
-		$data['Result'] = $StrQuery['Result'];
+		$data['Result'] = ''; // $StrQuery['Result'];
+		$data['user'] = $this->session->userdata("USERCODE");
+		$data['user_group'] = $this->session->userdata("GROUPTYPE");
 		$this->load->view('/Template/Header', $data);
 		$this->load->view($StrQuery['View']);
 		$this->load->view('/Template/Footer');
 	}
+
 	public function index(){
 		$StrQuery = array(
-			'Result' => array(
-							'Result' => '',
-								),
+			'Result' => array('Result' => ''),
 			'View' => 'Admin/Dashboard'
 		);
 		$this->loadpage($StrQuery);
 	}
+
 	public function DocAdviserLists(){
 		print_r($_SESSION);
 
