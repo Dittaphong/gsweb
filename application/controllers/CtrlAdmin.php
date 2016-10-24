@@ -3,45 +3,111 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class CtrlAdmin extends CI_Controller {
 	public function __construct(){
-		parent::__construct();
-		// session_start();
+		parent::__construct(); 
+		if($this->session->userdata("GROUPTYPE")!="ADMIN" &&  $this->session->userdata("GROUPTYPE")!="FACULTY"){
+			redirect('CtrlAuthen/');
+		} 
+		$this->GROUPTYPE=$this->session->userdata("GROUPTYPE");
 	}
-	public function loadpage($StrQuery){
-		$data['Result'] = $StrQuery['Result'];
+
+	public function loadpage($StrQuery,$data){ 
+		$data['user'] = $this->session->userdata("USERCODE"); 
+		$data['user_group'] = $this->session->userdata("GROUPTYPE");
 		$this->load->view('/Template/Header', $data);
 		$this->load->view($StrQuery['View']);
 		$this->load->view('/Template/Footer');
 	}
+
 	public function index(){
-		$StrQuery = array(
-			'Result' => array(
-							'Result' => '',
-								),
-			'View' => 'Admin/Dashboard'
-		);
-		$this->loadpage($StrQuery);
+		$StrQuery = array('View' => 'Admin/Dashboard');
+		$data['req_adviser'] = "20";
+		$data['qe_ce'] = "12";
+		$this->loadpage($StrQuery,$data);
 	}
+
 	public function DocAdviserLists(){
-		print_r($_SESSION);
-
-		$StrQuery = array(
-			'Result' => array( 
-					'DocAdviserLists' => $this->mod_admin->DocAdviserLists($_SESSION['GROUPTYPE'])),
-			'View' => 'Admin/DocAdviserLists'
-		);
-		$this->loadpage($StrQuery);
-	} 
-	public function DocExamLists(){
-		$EXAM_TYPE = $this->uri->segment(3);
-
-		$StrQuery = array(
-			'Result' => array(
-									'DocExamLists' => $this->mod_admin->DocExamLists($EXAM_TYPE),
-								),
-			'View' => 'Admin/DocExamLists'
-		);
-		$this->loadpage($StrQuery);
+		if(!$_POST){
+			$StrQuery = array( 
+				'View' => 'Admin/DocAdviserLists'
+			); 
+			$data['keyword'] = array(
+				'STUCODE' => '',
+				'STUNAME' => ''
+			);
+			$data['DocAdviserLists'] = $this->mod_admin->DocAdviserLists($this->GROUPTYPE);
+			$this->loadpage($StrQuery,$data);
+		}else{
+			$StrQuery = array( 
+				'View' => 'Admin/DocAdviserLists'
+			);
+			$data['keyword'] = array(
+				'STUCODE' => $_POST['STUDENTCODE'],
+				'STUNAME' => $_POST['STUDENTFULLNAME']
+			);
+			$data['DocAdviserLists'] = $this->mod_admin->DocAdviserSearch($this->GROUPTYPE,$data['keyword']);
+			$this->loadpage($StrQuery,$data);
+		}
 	}
+
+	public function DocExamLists(){
+
+		$EXAM_TYPE = $this->uri->segment(3);
+		if ($EXAM_TYPE=='QECE') {
+			$data['PageName'] = "ขอสอบ QE/CE";
+		}else if($EXAM_TYPE=='PROP'){
+			$data['PageName'] = "ขอสอบเค้าโครง";
+		}else if($EXAM_TYPE=='THES'){
+			$data['PageName'] = "ขอสอบวิทยานิพนธ์";
+		}else{
+			redirect('CtrlAuthen/');
+		} 
+
+		if(!$_POST){ 
+			$StrQuery = array('View'   => 'Admin/DocExamLists');
+			$data['keyword'] = array(
+				'STUCODE' => '',
+				'STUNAME' => ''
+			); 
+			$data['EXAM_TYPE'] = $EXAM_TYPE;
+			$data['DocExamLists'] = $this->mod_admin->DocExamLists($EXAM_TYPE, $data['keyword']);
+			$this->loadpage($StrQuery,$data);
+		}else{ 
+			$StrQuery = array('View'   => 'Admin/DocExamLists');
+			$data['keyword'] = array(
+				'STUCODE' => $_POST['STUDENTCODE'],
+				'STUNAME' => $_POST['STUDENTFULLNAME']
+			);
+			$data['EXAM_TYPE'] = $EXAM_TYPE;
+			$data['DocExamLists'] = $this->mod_admin->DocExamListsSearch($EXAM_TYPE, $data['keyword']);
+			$this->loadpage($StrQuery,$data);
+		}
+	}
+
+	public function SearchStudent(){
+		if(!$_POST){ 
+			$data['keyword'] = array('STUCODE' => '','STUNAME' => ''); 
+			$data['StudentLists'] = $this->mod_admin->StudentSearch($data['keyword']); 
+		}else{ 
+			$data['keyword'] = array('STUCODE' => $_POST['STUDENTCODE'],'STUNAME' => $_POST['STUDENTFULLNAME']); 
+			$data['StudentLists'] = $this->mod_admin->StudentSearch($data['keyword']); 
+		}
+			$StrQuery = array('View' => 'Admin/StudentLists'); 
+			$data['PageName'] = "ข้อมูลนักศึกษา"; 
+			$this->loadpage($StrQuery,$data); 
+	}
+
+	public function SearchOfficer(){
+		if(!$_POST){ 
+			$data['keyword'] = array('CODE' => '','NAME' => '');  
+		}else{ 
+			$data['keyword'] = array('CODE' => $_POST['CODE'],'NAME' => $_POST['FULLNAME']); 
+		} 
+			$data['Lists'] = $this->mod_admin->OfficerSearch($data['keyword']); 
+			$StrQuery = array('View' => 'Admin/OfficerLists'); 
+			$data['PageName'] = "ข้อมูลนักศึกษา";
+			$this->loadpage($StrQuery,$data); 
+	}
+
 	public function ApprovedPatition(){
  
 		// รหัส นักศึกษา

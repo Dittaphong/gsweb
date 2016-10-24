@@ -1,5 +1,5 @@
 <div class="col-md-12" style="text-align: right; ">
-<form method="POST" action="<?php echo base_url();?>index.php/CtrlAdmin/DocExamLists/<?php echo $EXAM_TYPE;?>">
+<form method="POST" action="<?php echo base_url();?>index.php/CtrlAdmin/SearchStudent">
   <button type="submit" class="btn btn-primary" style="margin-right:-20px;float: right;"> ค้นหา </button>
   <input type="text" id="STUDENTFULLNAME" name="STUDENTFULLNAME" class="form-control in-search"  placeholder="ชื่อนักศึกษา - สกุล" value="<?php echo $keyword['STUNAME']; ?>">
   <input type="text" id="STUDENTCODE" name="STUDENTCODE" class="form-control in-search"  placeholder="รหัสนักศึกษา" value="<?php echo $keyword['STUCODE']; ?>">
@@ -19,23 +19,21 @@
             <tr role="row">
               <th>รหัสนักศึกษา</th>
               <th>ชื่อ-นามสกุล</th>
-              <th>คณะ</th>
-              <th>วันที่ทำเอกสาร</th>
+              <th  width="150">คณะ</th>
               <th>ระดับการศึกษา</th>
               <th>ปีการศึกษา</th>
               <th>สถานภาพ</th>
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($DocExamLists as $RsExamLists): ?>
+            <?php foreach ($StudentLists as $RS): ?>
             <tr role="row" class="odd">
-              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RsExamLists['STUDENTID']; ?>/<?php echo $this->uri->segment(3);?>" ><?php echo $RsExamLists['STUDENTCODE']; ?></a></td>
-              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RsExamLists['STUDENTID']; ?>/<?php echo $this->uri->segment(3);?>" > <?php echo $RsExamLists['PREFIXNAME'].$RsExamLists['STUDENTNAME']." ".$RsExamLists['STUDENTSURNAME']; ?></a></td>
-              <td><?php echo $RsExamLists['FACULTYNAME']; ?></td>
-              <td><?php echo $this->debuger->FullDateThai($RsExamLists['EXAM_CREATE_DATE']); ?></td>
-              <td><?php echo $RsExamLists['LEVELNAME']; ?></td>
-              <td><?php echo $RsExamLists['CURRENTACADYEAR']; ?></td>
-              <td><?php echo $RsExamLists['procedure_name']; ?></td>
+              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RS['STUDENTID']; ?>/<?php echo $this->uri->segment(3);?>" ><?php echo $RS['STUDENTCODE']; ?></a></td>
+              <td><a href="<?php echo site_url(); ?>/CtrlAdmin/ApprovedPatition/<?php echo $RS['STUDENTID']; ?>/<?php echo $this->uri->segment(3);?>" > <?php echo $RS['STUNAME']; ?></a></td>
+              <td><?php echo $RS['FACULTYNAME']; ?></td>
+              <td><?php echo $RS['LEVELNAME']; ?></td>
+              <td><?php echo $RS['CURRENTACADYEAR']; ?></td>
+              <td><?php echo $RS['procedure_name']; ?></td>
             </tr>
             <?php endforeach; ?>
           </tbody>

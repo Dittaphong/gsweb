@@ -14,7 +14,19 @@ class CtrlAuthen extends CI_Controller {
 		$this->load->view('/Template/Footer');
 	}
 	public function index() {
-	$this->load->view('Public/LoginSelect');
+		if($this->session->userdata("GROUPTYPE")!=""){
+			if($_SESSION['GROUPTYPE']=="TEACHER") {
+				redirect('ctrl_officer');
+			} else if($_SESSION['GROUPTYPE']=="ADMIN" || $_SESSION['GROUPTYPE']=="FACULTY" ) {
+				redirect('CtrlAdmin');
+			} else if($_SESSION['GROUPTYPE']=="STUDENT") {
+				redirect('CtrlStudent');
+			} else {
+				redirect('CtrlAuthen');
+			}
+		}else{
+			$this->load->view('Public/LoginSelect');
+		} 
 
 	}
 	public function Authen(){

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-	<head>
+<head>
 	<title>ระบบสารสนเทศ</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -36,55 +36,60 @@
 	<script src="<?php echo base_url();?>assets/js/plugins/select2/select2.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<style>
-	div.left-sidebar > nav > ul > li > ul > li > ul > li>a{font-family: "Prompt";}
-	.topic-page {
-		font-family: "Prompt";
-	}
-body {
-	font-family: "tahoma";
-}
-ul.main-menu > li .text {
-	font-family: "Prompt";
-}
-.btn {
-	font-family: "Prompt";
-}
-h1, h2, h3, h4, h5, h6 {
-	font-family: "Prompt";
-}
-.data-row .data-name {
-	width: 12em;
-	background-color: #ddd;
-	color: #0b4d84;
-	font-size: 0.9em;
-	vertical-align: top;
-}
-.widget .widget-header h3 {font-family: "Prompt";}
-div.left-sidebar > nav > ul > li > a > span{
-    padding-left: 8px;
-    font-size: 16px !important;
-}
-ul.main-menu > li.active > a {
-    background-color: #428bca;
-    color: #000;
-}
-</style>
-	</head>
+		div.left-sidebar > nav > ul > li > ul > li > ul > li>a{font-family: "Prompt";}
+		.topic-page {
+			font-family: "Prompt";
+		}
+		body {
+			font-family: "tahoma";
+		}
+		ul.main-menu > li .text {
+			font-family: "Prompt";
+		}
+		.btn {
+			font-family: "Prompt";
+		}
+		h1, h2, h3, h4, h5, h6 {
+			font-family: "Prompt";
+		}
+		.data-row .data-name {
+			width: 12em;
+			background-color: #ddd;
+			color: #0b4d84;
+			font-size: 0.9em;
+			vertical-align: top;
+		}
+		.widget .widget-header h3 {font-family: "Prompt";}
+		div.left-sidebar > nav > ul > li > a > span{
+		    padding-left: 8px;
+		    font-size: 16px !important;
+		}
+		ul.main-menu > li.active > a {
+		    background-color: #428bca;
+		    color: #000;
+		}
+	</style>
+</head>
 <body class="dashboard">
 <!-- WRAPPER -->
 <div class="wrapper">
 <!-- TOP BAR -->
-	<div class="top-bar" style="background-color:rgb(246, 246, 246);  width: 100%;">
+	<div class="top-bar" style="width: 100%;">
 		<div class="container">
 			<div class="row">
-			        <!-- logo -->
-			    <div class="col-md-2 logo" style="margin-top:-7px; margin-bottom:5px;">
-
-			     	<a href="#">
-			     		<b style="color:#F2F2F2;font-size:16px;"><img src="<?php echo base_url();?>assets/img/logo-gs-blue.png"></b>
-			     	</a>
-			    </div>
-			        <!-- end logo -->
+		        <!-- logo -->
+				    <div class="col-md-2 logo" style="margin-top:-7px; margin-bottom:5px;">
+				     	<a href="#">
+				     		<b style="color:#F2F2F2;font-size:16px;margin-left:-8px;">
+				     			<img src="<?php echo base_url();?>assets/img/logo-gs-blue.png">
+				     		</b>
+				     	</a>
+				    </div>  
+				    <div class="top-bar-right"  style="margin-top:-35px;font-size:16px;">
+				    	<i class="glyphicon glyphicon-globe"></i> GROUP: <?php echo $user_group." "; ?> 
+				    	<i class="glyphicon glyphicon-user"></i> USER: <?php echo $user; ?> 
+				    </div>
+		        <!-- end logo -->
 			    <div class="col-md-10">
 			        <div class="row">
 			              <div class="col-md-3"> </div>
@@ -113,11 +118,10 @@ ul.main-menu > li.active > a {
       <?php $this->load->view('Template/SideMenu/MainMenu'); ?>
       <!-- /main-nav -->
       <!-- <i class="fa fa-angle-left js-toggle-minified"></i>  -->
-
-    </div>
+</div>
 <!-- end left sidebar -->
 <!-- content-wrapper -->
 <div class="col-md-10 content-wrapper" >
-<?php $this->load->view('Template/Breadcrumb'); ?>
+<?php // $this->load->view('Template/Breadcrumb'); ?>
 <!-- main -->
 <div class="content">

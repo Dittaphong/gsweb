@@ -17,10 +17,10 @@
     <li><a href="<?php echo site_url();?>/CtrlAdmin/DocExamLists/THES" >
       <i class="glyphicon glyphicon-inbox"></i><span class="text"> ขอสอบวิทยานิพนธ์</span></a>
     </li>
-    <li><a href="<?php echo site_url();?>/home/SearchStudent" >
+    <li><a href="<?php echo site_url();?>/CtrlAdmin/SearchStudent" >
       <i class="glyphicon glyphicon-education"></i><span class="text"> ข้อมูลนักศึกษา</span></a>
     </li>
-    <li><a href="<?php echo site_url();?>/CtrlAdmin/OfficerList" >
+    <li><a href="<?php echo site_url();?>/CtrlAdmin/SearchOfficer" >
       <i class="fa fa-users"></i><span class="text"> ข้อมูลอาจารย์</span></a>
     </li>
     <li><a href="<?php echo site_url();?>/CtrlAdmin/ProgramsSearch" >
@@ -31,25 +31,6 @@
     </li>
     <li><a href="<?php echo site_url();?>/CtrlAdmin/SearchThesis" >
       <i class="glyphicon glyphicon-book"></i><span class="text"> ค้นหาวิทยานิพนธ์</span></a>
-    </li>
-    <li>
-      <ul class="sub-menu" style="display: block;">
-        <li class="">
-          <a href="#" class="js-sub-menu-toggle">
-            <span class="text">ตั้งค่า</span>
-            <i class="toggle-icon fa fa-angle-left"></i>
-          </a>
-          <ul class="sub-menu">
-            <li><a href="#">ภาระงานอาจารย์</a></li>
-            <li><a href="#">ค่าตอบแทนประจำตำแหน่ง</a></li>
-            <li><a href="#">ห้องสอบ</a></li>
-            <li><a href="#">วันเวลาสอบเค้าโครง</a></li>
-            <li><a href="#"></a></li>
-          </ul>
-
-        </li>
-
-      </ul>
     </li>
     <li><a href="<?php echo site_url();?>/CtrlAuthen/Logout/" >
       <i class="glyphicon glyphicon-remove-circle" style="color:red"></i><span class="text" style="color:red"> ออกจากระบบ</span></a>
