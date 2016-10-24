@@ -15,6 +15,7 @@
 	<link href="<?php echo base_url();?>assets/css/main.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>assets/css/my-custom-styles.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>assets/css/fonts.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url();?>assets/css/cssJquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
 
 	<!-- Fav and touch icons -->
 	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url();?>assets/ico/kingadmin-favicon144x144.png">
@@ -31,6 +32,7 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery/jquery-2.1.0.min.js"></script>
 	<script type="text/javascript" src="<?php echo base_url(); ?>/assets/texteditor/ckeditor.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.uploadPreview.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-ui/jquery-ui.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/plugins/select2/select2.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 	<style>

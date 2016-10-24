@@ -6,7 +6,7 @@ class CtrlStudent extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		// session_start();
-	} 
+	}
 	public function loadpage($StrQuery){
 		$data['Result'] = $StrQuery['Result'];
 		$this->load->view('/Template/Header', $data);
@@ -21,15 +21,16 @@ class CtrlStudent extends CI_Controller {
 			'Result' => array(
 				'Student' => $Student,
 				'Transcript' => $Transcript,
-			),
+				),
 			'View' => 'Student/StudentProfile'
-		);
+			);
 		$this->loadpage($StrQuery);
 	}
 	public function Patition() {
 		$Student = $this->mod_student->StudentProfile($_SESSION['USERCODE']);
 		$ProgramOfficer = $this->mod_program->OfficerByProgram($Student[0]['PROGRAMID']);
-		$OfficerAll = $this->mod_officer->OfficerAll($Student[0]['PROGRAMID']);
+		// $OfficerAll = $this->mod_officer->OfficerAll($Student[0]['PROGRAMID']);
+		$OfficerAll = $this->mod_officer->OfficerAll();
 
 		// รหัส นักศึกษา
 		$StudentID = $this->uri->segment(3);
@@ -74,30 +75,32 @@ class CtrlStudent extends CI_Controller {
 
 		if ($ExamType=='ADVI') {
 			$DocPage = 'AppointAdviser';
+			$getProgramOfficer = $this->mod_student->getProgramOfficer($Student[0]['PROGRAMID']);
 		} elseif($ExamType=='QECE' ||$ExamType=='PROP' ||$ExamType=='THES') {
 			$DocPage = 'ExamReqSubmit';
 		}
-			$Transcript = $this->mod_student->Transcript($_SESSION['STUDENTID']);
+		$Transcript = $this->mod_student->Transcript($_SESSION['STUDENTID']);
 
-			$StrQuery = array(
-				'Result' => array(
-					'Student' => $Student,
-					'Transcript' => $Transcript,
-					'ProgramOfficer' => $ProgramOfficer,
-					'OfficerAll' => $OfficerAll,
-					'DocName' => $DocName,
-					'DocAdviser' => $DocAdviser,
-					'AdviserLists' => $AdviserLists,
-					'AdviserApprovedLock' => $AdviserApprovedLock,
-					'WorkLimit' => $WorkLimit,
-					'limitThesis' => $limitThesis,
-					'limitIS' => $limitIS,
-					'DocExam' => $DocXam,
-					'ThesisName' => $ThesisName,
+		$StrQuery = array(
+			'Result' => array(
+				'Student' => $Student,
+				'Transcript' => $Transcript,
+				'ProgramOfficer' => $ProgramOfficer,
+				'OfficerAll' => $OfficerAll,
+				'DocName' => $DocName,
+				'DocAdviser' => $DocAdviser,
+				'AdviserLists' => $AdviserLists,
+				'AdviserApprovedLock' => $AdviserApprovedLock,
+				'WorkLimit' => $WorkLimit,
+				'limitThesis' => $limitThesis,
+				'limitIS' => $limitIS,
+				'DocExam' => $DocXam,
+				'ThesisName' => $ThesisName,
+				'getProgramOfficer' => $getProgramOfficer,
 				),
-				'View' => 'Student/'.$DocPage
+			'View' => 'Student/'.$DocPage
 			);
-				$this->loadpage($StrQuery);
+		$this->loadpage($StrQuery);
 	}
 	public function PetitionSave() {
 		$studentId = $_SESSION['STUDENTID'];
@@ -107,72 +110,72 @@ class CtrlStudent extends CI_Controller {
 		}
 		if ($_POST['examtype']=="QECE") {
 			$input = array(
-					'STUDENTID' => $studentId,
-					'EXAM_TYPE' =>$_POST['examtype'],	);
+				'STUDENTID' => $studentId,
+				'EXAM_TYPE' =>$_POST['examtype'],	);
 		} else {
 			$input = array(
-					'STUDENTID' => $studentId,
-					'EXAM_TYPE' =>$_POST['examtype'],
-					'thesis_name_id' =>$_POST['name_id'],);
+				'STUDENTID' => $studentId,
+				'EXAM_TYPE' =>$_POST['examtype'],
+				'thesis_name_id' =>$_POST['name_id'],);
 		}
- 		$this->db->insert('doc_exam', $input);
+		$this->db->insert('doc_exam', $input);
 		$DocExam = $this->db->where('STUDENTID', $studentId)->where('EXAM_TYPE', $_POST['examtype'])->get('doc_exam')->result_array();
 
 		$doc_approved[1] = 'FACU';
 		$doc_approved[2] = 'DEAN';
 		for ($e=1; $e < 3; $e++) {
-				$input = array(
-					'doc_approved_type' => $_POST['examtype'],
-					'doc_approved_ref' => $DocExam[0]['EXAM_ID'],
-					'doc_approved_by' => 	$doc_approved[$e], );
-				$this->db->insert('relate_doc_approved',$input);
+			$input = array(
+				'doc_approved_type' => $_POST['examtype'],
+				'doc_approved_ref' => $DocExam[0]['EXAM_ID'],
+				'doc_approved_by' => 	$doc_approved[$e], );
+			$this->db->insert('relate_doc_approved',$input);
 		}
 		redirect($this->agent->referrer()."/success", 'refresh');
 	}
 
 	public function SaveDocAdviser(){
 
-				$DocAdviser = $this->db->where('STUDENTID', $_SESSION['STUDENTID'])->get('doc_adviser')->result_array();
-				if (count($DocAdviser)>0) {
-					$this->db->where('STUDENTID', $_SESSION['STUDENTID'])->delete('doc_adviser');
-					$this->db->where('doc_approved_type', 'ADVI')->where('doc_approved_type',$DocAdviser[0]['APPOINT_AVISER_ID'])->delete('relate_doc_approved');
-				}
-				$AdviserLists = $this->mod_officer->AdviserListsByStudentID($_SESSION['STUDENTID']);
-				if (count($AdviserLists)>0) {
-					$this->db->where('STUDENTID', $_SESSION['STUDENTID'])->delete('relate_appiont_adviser_officer');
-				}
+		$DocAdviser = $this->db->where('STUDENTID', $_SESSION['STUDENTID'])->get('doc_adviser')->result_array();
+		if (count($DocAdviser)>0) {
+			$this->db->where('STUDENTID', $_SESSION['STUDENTID'])->delete('doc_adviser');
+			$this->db->where('doc_approved_type', 'ADVI')->where('doc_approved_type',$DocAdviser[0]['APPOINT_AVISER_ID'])->delete('relate_doc_approved');
+		}
+		$AdviserLists = $this->mod_officer->AdviserListsByStudentID($_SESSION['STUDENTID']);
+		if (count($AdviserLists)>0) {
+			$this->db->where('STUDENTID', $_SESSION['STUDENTID'])->delete('relate_appiont_adviser_officer');
+		}
 
 
-				$data = array(
+		$data = array(
+			'STUDENTID' => $_SESSION['STUDENTID'], );
+		$this->db->insert('doc_adviser', $data);
+		$DocAdviser = $this->db->where('STUDENTID', $_SESSION['STUDENTID'])->get('doc_adviser')->result_array();
+		$doc_approved[1] = 'FACU';
+		$doc_approved[2] = 'DEAN';
+		for ($e=1; $e < 3; $e++) {
+			$input = array(
+				'doc_approved_type' => 'ADVI',
+				'doc_approved_ref' => $DocAdviser[0]['APPOINT_AVISER_ID'],
+				'doc_approved_by' => 	$doc_approved[$e], );
+			$this->db->insert('relate_doc_approved',$input);
+		}
+		$officer[0] = $_POST['MainAdviser'];
+		$officer[1] = $_POST['SubAdviser1'];
+		$officer[2] = $_POST['SubAdviser2'];
+		for ($i=0; $i <count($officer) ; $i++) {
+			if($officer[$i]!="") {
+				if($i==0) {
+					$type = 1;
+				} else {
+					$type = 2;
+				}
+				$input = array(
+					'OFFICERID' => $officer[$i],
+					'ADVISERTYPE' => $type,
 					'STUDENTID' => $_SESSION['STUDENTID'], );
-					$this->db->insert('doc_adviser', $data);
-				$DocAdviser = $this->db->where('STUDENTID', $_SESSION['STUDENTID'])->get('doc_adviser')->result_array();
-					$doc_approved[1] = 'FACU';
-					$doc_approved[2] = 'DEAN';
-					for ($e=1; $e < 3; $e++) {
-							$input = array(
-								'doc_approved_type' => 'ADVI',
-								'doc_approved_ref' => $DocAdviser[0]['APPOINT_AVISER_ID'],
-								'doc_approved_by' => 	$doc_approved[$e], );
-							$this->db->insert('relate_doc_approved',$input);
-					}
-				$officer[0] = $_POST['MainAdviser'];
-				$officer[1] = $_POST['SubAdviser1'];
-				$officer[2] = $_POST['SubAdviser2'];
-				for ($i=0; $i <count($officer) ; $i++) {
-						if($officer[$i]!="") {
-							if($i==0) {
-								$type = 1;
-							} else {
-								$type = 2;
-							}
-							$input = array(
-								'OFFICERID' => $officer[$i],
-								'ADVISERTYPE' => $type,
-								'STUDENTID' => $_SESSION['STUDENTID'], );
-								$this->db->insert('relate_appiont_adviser_officer',$input);
-							}
-						}
-				redirect($this->agent->referrer()."/success", 'refresh');
+				$this->db->insert('relate_appiont_adviser_officer',$input);
 			}
+		}
+		redirect($this->agent->referrer()."/success", 'refresh');
+	}
 }

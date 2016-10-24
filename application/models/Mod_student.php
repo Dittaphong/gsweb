@@ -29,4 +29,15 @@ class mod_student extends CI_Model {
 		$this->StudentRelate();
 		return $this->db->get('student_master')->result_array();
 	}
+
+	public function getProgramOfficer($programid){	//ดึงข้อมูลอาจารย์ประจำหลักสูตร
+		$sql ='
+		SELECT *
+		FROM  relate_program_officer
+		INNER JOIN  officer on relate_program_officer.OFFICERID= officer.OFFICERID
+		WHERE relate_program_officer.PROGRAMID ="'.$programid.'"';
+
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
 }
