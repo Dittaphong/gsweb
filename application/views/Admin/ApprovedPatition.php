@@ -1,6 +1,107 @@
-<?php
-$StudentType = $Result['Student'][0]['LEVELID'];
+<div class="row" >
+	<div class="col-md-2 col-sm-4" style="text-align:center;">
+		<p style="padding: 10px;">
+			<img alt="" width="100%"  src="<?php echo base_url().'assets/img/profile-studen.png';?>" data-holder-rendered="true" style=" display: block;">
+		</p>
+	</div>
+	<div class="col-md-5 col-sm-12" >
+		<table border="0" width="100%">
+			<?php foreach ($Student as $dataStudent): ?>
 
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>รหัส :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['STUDENTCODE'];?></p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>ชื่อ-สกุล (ภาษาไทย) :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['STUDENTNAME']."   ".$dataStudent['STUDENTSURNAME'];?></p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>แผนการเรียน :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['LEVELNAME'];?></p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>สถานะภาพ :</b></p></td>
+					<td align="left"><p style="padding: 5px;">กำลังศึกษา</p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>วันเข้าศึกษา :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['ADMITACADYEAR'];?></p></td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-5 col-sm-12" >
+			<table  border="0" width="100%">
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>ระดับการศึกษา :</b></p></td>
+					<td align="left">
+						<p style="padding: 5px;">
+							<?php  //echo $this->session->userdata('username')=='ms_user' ? 'ปริญญาโท' : 'ปริญญาเอก' ;?>
+							<?php echo $dataStudent['LEVELNAMECERTIFY'];?>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>ชื่อ-สกุล (ภาษาอังกฤษ) :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['STUDENTNAMEENG']."   ".$dataStudent['STUDENTSURNAMEENG'];?></p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>คณะ :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['FACULTYNAME'];?></p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>สาขา/แผนการศึกษา :</b></p></td>
+					<td align="left"><p style="padding: 5px;"><?php echo $dataStudent['FACULTYABB'];?></p></td>
+				</tr>
+				<tr>
+					<td align="right" width="50%"><p style="padding: 5px;"><b>ภาษาต่างประเทศ :</b></p></td>
+					<td align="left"><p style="padding: 5px;">ผ่าน</p></td>
+				</tr>
+			</table>
+		</div>
+		<?php
+		$StudentType = $dataStudent['LEVELID'];
+		$testName='';
+		if ($StudentType>=80 && $StudentType<=89) {
+			$testName = "สอบวัดประมวลความรู้";
+		} elseif($StudentType>=90 && $StudentType<=99) {
+			$testName = "สอบวัดคุณสมบัติ";
+		}elseif($StudentType === 82){
+			$testName = "ขอสอบค้นคว้าอิสระ";
+		}
+		?>
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="active">
+				<a href="#testName" data-toggle="tab"><i class="fa fa-home"></i>
+					<?php echo $dataStudent['procedure_name']; ?> </a>
+				</li><li class="">
+				<a href="#ADVI" data-toggle="tab"><i class="fa fa-user"></i> <?php echo "อาจารย์ที่ปรึกษา"; ?> </a>
+			</li>
+		</ul>
+    <?php $advisor = $dataStudent['advisor']; ?>
+    <div class="tab-content">
+      <div id="testName" class="tab-pane fade in active">
+      <?php echo $dataStudent['thesis_name_th']; ?>
+      </div>
+      <div id="ADVI" class="tab-pane fade">
+        <?php
+        for($i=0;$i < count($advisor);$i++){
+         echo "<p>".$dataStudent['advisor'][$i]['OFFICERNAME']."</p>";
+       }
+       ?>
+     </div>
+   </div>
+ <?php endforeach ?>
+
+</div>
+
+
+<?php
+	// print_r($Student);
+/*
+$StudentType = 82;
+// $StudentType = $Result['Student'][0]['LEVELID'];
+print_r($Result);
 if ($StudentType>=80 && $StudentType<=89) {
   $QECEName = "สอบวัดความรู้";
 } else {
@@ -71,11 +172,11 @@ if ($StudentType==82) {
       </ul>
       <div class="tab-content">
         <div class="tab-pane fade active in" id="activities">
-          <?php if ($Result['DocAdviserStatus']['DEAN'][0]['doc_approved_status']==1): ?>
+          <!-- <?php if ($Result['DocAdviserStatus']['DEAN'][0]['doc_approved_status']==1): ?>
             <h5 style="color: #97dd03;"><i class="fa fa-check-square-o"></i>
                 <?php else: ?>
             <h5><i class="fa fa-square-o"></i>
-          <?php endif; ?>
+          <?php endif; ?> -->
            แต่งตั้งอาจารย์ที่ปรึกษา</h5>
           <?php if (isset($Result['DocStatus']['QECE']) && $Result['DocStatus']['QECE']==1): ?>
             <h5 style="color: #97dd03;"><i class="fa fa-check-square-o"></i>
@@ -120,3 +221,4 @@ if ($StudentType==82) {
     </div>
   </div>
 </div>
+*/

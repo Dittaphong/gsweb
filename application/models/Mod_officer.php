@@ -45,4 +45,5 @@ class Mod_officer extends CI_Model {
     $query = $this->db->get('relate_appiont_adviser_officer');
     return $query->num_rows();
   }
+
 }
